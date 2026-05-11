@@ -1,10 +1,12 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-todo-input',
-  imports: [],
+   standalone: true,
+  imports: [FormsModule],
   templateUrl: './todo-input.html',
-  styleUrl: './todo-input.scss',
+  styleUrls: ['./todo-input.scss'],
 })
 export class TodoInput {
   title = '';
