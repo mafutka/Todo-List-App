@@ -1,0 +1,14 @@
+<p>todo-input works!</p>
+<div class="input-wrapper">
+  <input [(ngModel)]="title" placeholder="Enter task..." />
+
+  <!-- <select [(ngModel)]="priority">
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+  </select> -->
+
+  <input type="date" [(ngModel)]="dueDate" />
+
+  <button (click)="onAdd()">Add</button>
+</div>
