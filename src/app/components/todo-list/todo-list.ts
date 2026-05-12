@@ -12,18 +12,14 @@ import { TodoInput } from '../todo-input/todo-input';
 export class TodoList {
   todos: Todo[] = [];
 
-  addTodo(data: any) {
-    const newTodo: Todo = {
-      id: Date.now(),
-      title: data.title,
-      completed: false,
-      priority: data.priority,
-      createdAt: new Date(),
-      dueDate: data.dueDate,
-    };
+  addTodo(todo: any) {
+  this.todos.push({
+    ...todo,
+    id: Date.now(),
+    completed: false
+  });
+}
 
-    this.todos.push(newTodo);
-  }
 
   toggle(todo: Todo) {
     todo.completed = !todo.completed;

@@ -1,6 +1,11 @@
 .input-wrapper {
     display: flex;
 }
-.select-wrapper {
-    
+select {
+  position: relative;
+  z-index: 10;
+}
+.done {
+  text-decoration: line-through;
+  opacity: 0.6;
 }
