@@ -3,13 +3,29 @@
 <app-todo-input (add)="addTodo($event)" />
 
 <div class="list">
+    <button (click)="sortByPriority()">Sort by priority</button>
+    <button (click)="filter='all'">All</button>
+<button (click)="filter='active'">Active</button>
+<button (click)="filter='completed'">Completed</button>
+<input 
+        type="checkbox" 
+        [checked]="todo.completed"
+        (change)="toggle(todo)"
+      />
   @for (todo of todos; track todo.id) {
     <div class="item" [class.done]="todo.completed">
-      <span (click)="toggle(todo)">
-        {{ todo.title }}
-      </span>
 
-      <button (click)="delete(todo.id)">Delete</button>
-    </div>
+  @if (editingId === todo.id) {
+    <input [(ngModel)]="editTitle" />
+    <button (click)="saveEdit(todo)">Save</button>
+  } @else {
+    <span (click)="toggle(todo)">
+      {{ todo.title }}
+    </span>
+    <button (click)="startEdit(todo)">Edit</button>
+  }
+
+  <button (click)="delete(todo.id)">Delete</button>
+</div>
   }
 </div>
