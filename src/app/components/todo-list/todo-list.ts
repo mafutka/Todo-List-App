@@ -22,35 +22,59 @@ export class TodoList {
 
   constructor(private todoService: TodoService) {}
 
-  ngOnInit() {
-    this.todoService.getTodos().subscribe((data: any) => {
-      this.todos = data.slice(0, 10);
-    });
+   ngOnInit() {
+    const saved = localStorage.getItem('todos');
+
+    if (saved) {
+      this.todos = JSON.parse(saved);
+    } else {
+      this.todoService.getTodos().subscribe((data: any) => {
+        this.todos = data.slice(0, 10).map((t: any) => ({
+          ...t,
+          priority: 'medium'
+        }));
+        this.saveToStorage();
+      });
+    }
   }
 
-  addTodo(todo: any) {
-    this.todoService.addTodo(todo).subscribe((newTodo) => {
-      this.todos.push({
-        ...newTodo,
-        completed: false
-      });
-    });
+  saveToStorage() {
+    localStorage.setItem('todos', JSON.stringify(this.todos));
+  }
+
+   addTodo(todo: any) {
+    const newTodo: Todo = {
+      id: Date.now(),
+      title: todo.title,
+      completed: false,
+      priority: todo.priority
+    };
+
+    this.todos = [...this.todos, newTodo];
+
+    this.saveToStorage();
   }
 
   toggle(todo: Todo) {
     todo.completed = !todo.completed;
-    this.todoService.updateTodo(todo).subscribe();
+
+    this.saveToStorage();
   }
 
   delete(id: number) {
-    this.todoService.deleteTodo(id).subscribe(() => {
-      this.todos = this.todos.filter(t => t.id !== id);
-    });
+    this.todos = this.todos.filter(t => t.id !== id);
+
+    this.saveToStorage();
   }
 
   sortByPriority() {
     const order = { high: 3, medium: 2, low: 1 };
-    this.todos.sort((a, b) => order[b.priority] - order[a.priority]);
+
+    this.todos = [...this.todos].sort(
+      (a, b) => order[b.priority] - order[a.priority]
+    );
+
+    this.saveToStorage();
   }
 
   get filteredTodos() {
@@ -63,7 +87,8 @@ export class TodoList {
     return this.todos;
   }
 
-  startEdit(todo: Todo) {
+
+   startEdit(todo: Todo) {
     this.editingId = todo.id;
     this.editTitle = todo.title;
   }
@@ -72,6 +97,6 @@ export class TodoList {
     todo.title = this.editTitle;
     this.editingId = null;
 
-    this.todoService.updateTodo(todo).subscribe();
+    this.saveToStorage();
   }
 }
