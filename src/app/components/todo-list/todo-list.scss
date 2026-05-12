@@ -1,4 +1,28 @@
+.list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 26px;
+}
+
 .list {
     display: flex;
     flex-direction: column;
+    gap: 8px;
+}
+
+.controls {
+    display: flex;
+    gap: 12px;
+}
+.item {
+    display: flex;
+    gap: 4px;
+}
+button {
+    border-radius: 30px;
+}
+
+.checkbox {
+    border-radius: 50%;
 }

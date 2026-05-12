@@ -1,5 +1,6 @@
 .input-wrapper {
     display: flex;
+    gap: 12px;
 }
 select {
   position: relative;
@@ -8,4 +9,8 @@ select {
 .done {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+button {
+  border-radius: 30px;
 }

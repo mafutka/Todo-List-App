@@ -12,7 +12,6 @@ import { TodoService } from '../../services/services';
   styleUrl: './todo-list.scss',
 })
 export class TodoList {
-
   todos: Todo[] = [];
 
   filter: 'all' | 'completed' | 'active' = 'all';
@@ -22,7 +21,7 @@ export class TodoList {
 
   constructor(private todoService: TodoService) {}
 
-   ngOnInit() {
+  ngOnInit() {
     const saved = localStorage.getItem('todos');
 
     if (saved) {
@@ -31,7 +30,7 @@ export class TodoList {
       this.todoService.getTodos().subscribe((data: any) => {
         this.todos = data.slice(0, 10).map((t: any) => ({
           ...t,
-          priority: 'medium'
+          priority: 'medium',
         }));
         this.saveToStorage();
       });
@@ -42,12 +41,14 @@ export class TodoList {
     localStorage.setItem('todos', JSON.stringify(this.todos));
   }
 
-   addTodo(todo: any) {
+  addTodo(todo: any) {
     const newTodo: Todo = {
       id: Date.now(),
       title: todo.title,
       completed: false,
-      priority: todo.priority
+      priority: todo.priority,
+      createdAt: new Date(),
+      dueDate: todo.dueDate || new Date(),
     };
 
     this.todos = [...this.todos, newTodo];
@@ -62,7 +63,7 @@ export class TodoList {
   }
 
   delete(id: number) {
-    this.todos = this.todos.filter(t => t.id !== id);
+    this.todos = this.todos.filter((t) => t.id !== id);
 
     this.saveToStorage();
   }
@@ -70,25 +71,22 @@ export class TodoList {
   sortByPriority() {
     const order = { high: 3, medium: 2, low: 1 };
 
-    this.todos = [...this.todos].sort(
-      (a, b) => order[b.priority] - order[a.priority]
-    );
+    this.todos = [...this.todos].sort((a, b) => order[b.priority] - order[a.priority]);
 
     this.saveToStorage();
   }
 
   get filteredTodos() {
     if (this.filter === 'completed') {
-      return this.todos.filter(t => t.completed);
+      return this.todos.filter((t) => t.completed);
     }
     if (this.filter === 'active') {
-      return this.todos.filter(t => !t.completed);
+      return this.todos.filter((t) => !t.completed);
     }
     return this.todos;
   }
 
-
-   startEdit(todo: Todo) {
+  startEdit(todo: Todo) {
     this.editingId = todo.id;
     this.editTitle = todo.title;
   }

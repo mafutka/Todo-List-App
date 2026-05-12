@@ -1,5 +1,6 @@
-<app-todo-input (add)="addTodo($event)" />
 
+<app-todo-input (add)="addTodo($event)" />
+<div class="list-container">
 <div class="controls">
   <button (click)="sortByPriority()">Sort</button>
   <button (click)="filter='all'">All</button>
@@ -12,7 +13,9 @@
 
     <div class="item" [class.done]="todo.completed">
 
+    
       <input 
+      class="checkbox"
         type="checkbox"
         [checked]="todo.completed"
         (change)="toggle(todo)"
@@ -32,4 +35,5 @@
     </div>
 
   }
+</div>
 </div>
