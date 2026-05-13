@@ -26,3 +26,22 @@ button {
 .checkbox {
     border-radius: 50%;
 }
+
+.priority {
+  margin-left: 10px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.priority.low {
+  background-color:rgb(0, 208, 122, 0.2);
+}
+
+.priority.medium {
+  background-color: rgb(244, 208, 9, 0.2);
+}
+
+.priority.high {
+  background-color: rgba(255, 0, 0, 0.2);
+}

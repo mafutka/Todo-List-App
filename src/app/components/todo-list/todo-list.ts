@@ -86,15 +86,17 @@ export class TodoList {
     return this.todos;
   }
 
+  editPriority: 'low' | 'medium' | 'high' = 'medium';
   startEdit(todo: Todo) {
     this.editingId = todo.id;
     this.editTitle = todo.title;
+    this.editPriority = todo.priority;
   }
 
   saveEdit(todo: Todo) {
     todo.title = this.editTitle;
     this.editingId = null;
-
+    todo.priority = this.editPriority;
     this.saveToStorage();
   }
 }
